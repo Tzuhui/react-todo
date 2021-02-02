@@ -1,7 +1,7 @@
 export default function Header() {
     return (
-        <header class="py-2 bg-light">
-            <h1 class="text-center">Things To Do</h1>
+        <header className="py-2 bg-light">
+            <h1 className="text-center">Things To Do</h1>
         </header>
     );
 }

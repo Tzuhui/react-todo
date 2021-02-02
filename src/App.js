@@ -16,49 +16,68 @@ class App extends Component {
       filterType: 'all',
       inputValue: '',
     };
+    this.changeState = this.changeState.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
   handleChange(event) {
     this.setState({inputValue: event.target.value});
   }
+  changeState(event) {
+    let todosList = this.state.todos;
+    const index = this.state.todos.findIndex(data => data.id === parseInt(event.target.id));
+    if (todosList[index].active) {
+      todosList[index].active = false
+    } else {
+      todosList[index].active = true
+    }
+    this.setState({todos: todosList})
+  }
   addTodo() {
-    this.setState(state => {
-      const todos = [...state.todos, {
-        id: 4,
-        text: state.inputValue,
-        active: false
-      }];
-      state.inputValue = '';
-      return {
-        todos,
-      };
+    const todoLength = this.state.todos.length;
+    this.state.todos.push({
+      id: todoLength + 1,
+      text: this.state.inputValue,
+      active: false
     });
+    this.setState({ todos: this.state.todos });
+    this.setState({ inputValue: '' });
+  }
+  get displayData() {
+    if (this.state.filterType !== 'all') {
+      if (this.state.filterType === 'completed') {
+        return this.state.todos.filter(todo => todo.active)
+      } else {
+        return this.state.todos.filter(todo => !todo.active)
+      }
+    } else {
+      return this.state.todos
+    }
   }
   render() {
       return (
-        <div class="container">
+        <div className="container">
         <Header/>
-        <div class="input-group my-3">
-          <input type="text" class="form-control" placeholder="新增 Todo" value={this.state.inputValue} onChange={this.handleChange} />
-          <button class="btn btn-outline-primary" type="button" id="button-addon2" onClick={() => this.addTodo()}>Add</button>
+        <div className="input-group my-3">
+          <input type="text" className="form-control" placeholder="新增 Todo" value={this.state.inputValue} onChange={this.handleChange} />
+          <button className="btn btn-outline-primary" type="button" id="button-addon2" onClick={() => this.addTodo()}>Add</button>
         </div>
-        <div class="btn-group mb-3" role="group" aria-label="Basic outlined example">
+        <div className="btn-group mb-3" role="group" aria-label="Basic outlined example">
           <button type="button"
             className={'btn btn-outline-primary ' + (this.state.filterType === "all" ? "active" : "")}
             onClick={() => this.setState({ filterType: 'all' })}>全部</button>
-          <button type="button" class="btn btn-outline-primary"
+          <button type="button"
             className={'btn btn-outline-primary ' + (this.state.filterType === "left" ? "active" : "")}
             onClick={() => this.setState({ filterType: 'left' })}>未完成</button>
-          <button type="button" class="btn btn-outline-primary"
+          <button type="button"
             className={'btn btn-outline-primary ' + (this.state.filterType === "completed" ? "active" : "")}
             onClick={() => this.setState({ filterType: 'completed' })}>完成</button>
         </div>
-        <ul class="list-group">
-          {this.state.todos.map((value) => {
-            return <Todo data={value} id={value.id} />
+        <ul className="list-group">
+          {this.displayData.map((value, key) => {
+            return <Todo data={value} id={value.id} key={key} handler={this.changeState}/>
           })}
         </ul>
-        <p class="mt-3"> 共有 {this.state.todos.length} 項任務</p>
+        <p className="mt-3"> 共有 {this.state.todos.length} 項任務</p>
       </div>
       );
   }

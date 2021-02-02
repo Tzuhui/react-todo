@@ -1,9 +1,11 @@
 export default function Todo(props) {
   return (
-    <li class="list-group-item" key={props.id}>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id={props.id} />
-        <label class="form-check-label" for={props.id}>
+    <li className="list-group-item">
+      <div className="form-check">
+        <input className="form-check-input" type="checkbox"
+          id={props.id} checked={props.data.active}
+          onChange={props.handler} />
+        <label className="form-check-label" htmlFor={props.id}>
           {props.data.text}
         </label>
       </div>
