@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Navs />
-        <Route path="/" exact component={TodoList} />
+        <Route path="/" component={TodoList} />
         <Route path="/about" exact component={About} />
       </BrowserRouter>
     )
