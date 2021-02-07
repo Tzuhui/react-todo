@@ -1,9 +1,9 @@
 // import logo from './logo.svg';
 import React, {Component} from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import Navs from './components/Nav';
-import TodoList from './view/TodoList';
-import About from './view/About';
+import Navs from './components/Nav/Nav';
+import TodoList from './view/ToDo/TodoList';
+import About from './view/About/About';
 import './assets/stylesheets/all.scss';
 
 class App extends Component {
@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Navs />
-        <Route path="/" exact component={TodoList} />
+        <Route path="/" component={TodoList} />
         <Route path="/about" exact component={About} />
       </BrowserRouter>
     )
